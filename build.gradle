@@ -1,0 +1,33 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.2.2'
+	id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '17'
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	//1. spring web
+	implementation 'org.springframework.boot:spring-boot-starter-web'	// spring web
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'	//spring web
+	//2. mysql 라이브러리
+	runtimeOnly 'com.mysql:mysql-connector-j'	// mysql 라이브러리
+	//3. 머스테치: 화면 뷰
+	implementation 'org.springframework.boot:spring-boot-starter-mustache'	// 머스테치: 뷰 템플릿
+	//4. 롬북
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
