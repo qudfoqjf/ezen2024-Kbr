@@ -172,16 +172,16 @@ public class ArticleController {
         - 다른 클래스의 함수를 호출하는방법
         [ MVC패턴은 클래스들이 분업하기 때문에 서로 다른 클래스들끼리 데이터 주고(매개변수)받는다(리턴). *상호작용 특징 ]
 
-        // 1. 해당 함수가 인스턴스(static없으면) 멤버이면
+        // 1. 해당 함수가 인스턴스(static 없으면) 멤버이면
         ArticleDao articleDao = new ArticleDao();
         articleDao.createArticle();
-        // 2. 해당 함수가 인스턴스(static없으면) 멤버이면
+        // 2. 해당 함수가 인스턴스(static 없으면) 멤버이면
         new ArticleDao().createArticle();
         // 3. 해당 함수가 정적(static) 멤버이면
         ArticleDao.createArticle();
         // 4. 해당 클래스가 싱글톤( 프로그램내 무조건 하나의 객체만 갖는 패턴)
         ArticleDao.getInstance().createArticle();
-        // 5. 스프링 컨테이너(JVM만들어진 메모리 저장소) 등록 빈(객체) 된 경우
+        // 5. 스프링 컨테이너(JVM 만들어진 메모리 저장소) 등록 빈(객체) 된 경우
         @Autowired
         ArticleDao articleDao;
 
