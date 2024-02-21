@@ -7,6 +7,7 @@ import ezenweb.model.dto.MemberDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -36,14 +37,23 @@ public class BoardController {
     @PostMapping("/board/update")
     @ResponseBody
     public boolean update(BoardDto boardDto) {              System.out.println("BoardController.update");System.out.println("boardDto = " + boardDto);
-        boolean result = boardDao.update( boardDto );       System.out.println("result = " + result);
+        // 1. 비밀번호 검증 요청
+        boolean result=boardDao.confirmPassword(boardDto.getBno(),boardDto.getBpassword());
+        if(result){
+        // 2. 수정 요청
+        result = boardDao.update( boardDto );       System.out.println("result = " + result);
+       }
         return result;
     }
     // 4. 삭제
-    @GetMapping("/board/delete/{bno}")
+    @GetMapping("/board/delete/{bno}/{bpassword}")
     @ResponseBody
-    public boolean delete( int bno ) {                      System.out.println("BoardController.delete");System.out.println("bno = " + bno);
-        boolean result = boardDao.delete( bno );            System.out.println("result = " + result);
+    public boolean delete( @PathVariable int bno, @PathVariable String bpassword ) {                      System.out.println("BoardController.delete");System.out.println("bno = " + bno);
+        // 1. 비밀번호 검증 요청
+        boolean result=boardDao.confirmPassword(bno,bpassword);
+        if(result){
+            result = boardDao.delete( bno );
+        }            System.out.println("result = " + result);
         return result;
     }
         //=================================View Rest==========================================//
