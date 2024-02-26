@@ -51,7 +51,11 @@ function login(){
        success : function ( result ){               // 통신후 응답받은 값
             console.log(result);
              //4. 결과
-            if(result){alert('로그인성공')}
+            if(result){alert('로그인성공');
+                //js 페이지 전환
+                location.href="/";  //로그인 성공시 메인
+            }
+
             else{alert('로그인실패');}
         }
     })

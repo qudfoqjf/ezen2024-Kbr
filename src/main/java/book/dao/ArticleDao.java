@@ -15,7 +15,7 @@ public class ArticleDao {
     private Connection conn; // DB연동 결과 객체를 연결 , 기재된 SQL Statement객체 반환.
     private PreparedStatement ps;  // 기재된 SQL에 매개변수 할당 , SQL 실행
     private ResultSet rs;          // select 결과 여러개 레코드를 호출
-    public ArticleDao(){         // db연동를 생성자에서 처리
+    public ArticleDao(){         // db 연동을 생성자에서 처리
         try {
             // 1. mysql JDBC 호출 ( 각 회사별  상이 , 라이브러리 다운로드 )
             Class.forName("com.mysql.cj.jdbc.Driver");
