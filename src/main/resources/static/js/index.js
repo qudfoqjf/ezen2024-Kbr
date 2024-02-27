@@ -13,6 +13,16 @@ $.ajax({
     //2. 무엇을
     let html= "";
     if(r!= ''){ //로그인 했을때
+
+        $.ajax({
+            url: '/member/login/info',
+            method: 'get',data:{id:r},
+            async: false,
+            success:(r2)=>{
+            console.log(r2);
+            console.log(r2.uuidFile);
+
+
         html+= ` <li class="nav-item">
                     <a class="nav-link" onclick="logout()">로그아웃</a>
                  </li>
@@ -20,8 +30,10 @@ $.ajax({
                     <a class="nav-link" href="#">내 정보</a>
                  </li>
                  <li class="nav-item">
-                    <img src="#">${r}님
+                    <img src="/img/${r2.uuidFile}"/>${r}님
                  </li>`
+                    }
+                         })
     }else{//로그인 안했을때
         html +=`<li class="nav-item">
                 <a class="nav-link" href="/member/login">로그인</a>
