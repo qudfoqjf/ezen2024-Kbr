@@ -20,7 +20,7 @@ public class FileService {
         String uuid= UUID.randomUUID().toString();  System.out.println("uuid = " + uuid);
         String filename = uuid+"_"+multipartFile.getOriginalFilename().replaceAll("_","-");
 
-        //1. 첨부파일 업로드 하기[업로드란 : 클라이언트의 바이트(대용량
+        //1. 첨부파일 업로드 하기[업로드란 : 클라이언트의 바이트(대용량/파일)을 서버로 복사
         //1. 첨부파일을 저장할 경로
         //File 클래스: 파일 관련된 메소드 제공
         //new File(파일경로);

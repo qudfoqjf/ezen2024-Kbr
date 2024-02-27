@@ -17,7 +17,7 @@ $.ajax({
         $.ajax({
             url: '/member/login/info',
             method: 'get',data:{id:r},
-            async: false,
+            async: false,           // 동기화
             success:(r2)=>{
             console.log(r2);
             console.log(r2.uuidFile);
