@@ -90,6 +90,14 @@ public class MemberController {
 
         return memberDao.doGetLoginInfo(id);
     }
+    //4. ================ 아이디 중복체크 요청=============
+    @GetMapping("/member/find/idcheck")
+    @ResponseBody
+    public boolean doGetFinIdCheck(@RequestParam String id){
+        System.out.println("MemberController.doGetFinIdCheck");
+        System.out.println("id = " + id);
+        return false;
+    }
 
 
 

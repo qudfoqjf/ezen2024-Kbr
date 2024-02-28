@@ -1,14 +1,31 @@
 {{>ezenweb/header}}
     <h3>회원가입 페이지</h3>
     <form class="signUpForm">
-        아이디: <input type="text" id="id"name="id"> <br/>
-        비밀번호: <input type="text" id="pw"name="pw"> <br/>
-        비밀번호 확인: <input type="text" id="pwconfirm" name="pwconfirm"><br/>
-        이름: <input type="text" id="name" name="name"><br/>
-        전화번호: <input type="text" id="phone" name="phone"><br/>
-        이메일: <input type="text" id = "email" name="email"><br/>
 
-        프로필 사진:
+        <div> 아이디 </div>
+        아이디: <input onkeyup="idcheck()" type="text" id="id"name="id"> <br/>
+        <div class="idcheckbox"> 유효성검사결과</div>
+
+        <div>비밀번호</div>
+        <input onkeyup="pwcheck()" type="text" id="pw"name="pw"> <br/>
+
+        <div>비밀번호 확인</div>
+        <input onkeyup="pwcheck()" type="text" id="pwconfirm" name="pwconfirm"><br/>
+        <div class="pwcheckbox">유효성검사결과</div>
+
+        <div>이름</div>
+        <input onkeyup="namecheck()" type="text" id="name" name="name"><br/>
+        <div class="namecheckbox"></div>
+
+        <div>전화번호</div>
+        <input onkeyup="phonecheck()" type="text" id="phone" name="phone"><br/>
+        <div class="phonecheckbox"></div>
+
+        <div>이메일 </div>
+        <input onkeyup="emailcheck()" type="text" id = "email" name="email"><br/>
+        <div class="emailcheckbox"></div>
+
+        <div>프로필 사진</div>
         <input onchange="onChangeImg(this)" type="file" id="img" name="img"
         accept="/image/*"><br/>
         <div>   <!--첨부파일 미리보기-->

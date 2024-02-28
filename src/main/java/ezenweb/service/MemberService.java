@@ -4,6 +4,7 @@ import ezenweb.model.dao.MemberDao;
 import ezenweb.model.dto.MemberDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Service
 public class MemberService {
@@ -11,6 +12,8 @@ public class MemberService {
     private FileService fileService;    // 외부 서비스
     @Autowired
     private MemberDao memberDao;
+    @Autowired
+    private EmailService emailService;
     //1. 회원가입 서비스
     public boolean doPostSignup(MemberDto memberDto){
 
@@ -33,7 +36,10 @@ public class MemberService {
             }
         }
         memberDto.setUuidFile(fileName);
-            return memberDao.doPostSignup(memberDto);
+        boolean result=memberDao.doPostSignup(memberDto);
+        if(result){emailService.send();}
+        return result;
+
     }// end
     //2. 로그인 서비스
 
@@ -42,6 +48,11 @@ public class MemberService {
         // 1. DAO 호출
         return memberDao.doGetLoginInfo(id);
 
+    }
+
+    //4. 아이디 중복 체크 요청
+    public boolean doGetFinIdCheck( String id){
+        return false;
     }
 }
 
