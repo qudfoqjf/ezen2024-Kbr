@@ -46,69 +46,56 @@
 //***************현재 유효성검사 체크 현황
 let checkArray = [false,false,false,false,false];   //아이디, 비밀번호, 이름, 전화번호, 이메일
 
-//4. 아이디 유효성 검사 (아이디 입력할때 마다)
-function idcheck(){
-
+// 4. 아이디 유효성검사. ( 아이디 입력할때 마다. )
+function idcheck(){   console.log('idcheck()');
     // 1. 입력된 데이터 가져오기
-    let id =document.querySelector('#id').value;
-
-    //2. 정규표현식  : 영소문자+ 숫자 조합의 5~30 글자 사이의 규칙
-    let 아이디규칙 =/^[a-z0-9]{5,30}$/
-
-    //3. 정규표현식에 따른 검사.
-    console.log(아이디규칙.test(id));
-    if(아이디규칙.test(id)){
-        // *아이디 중복체크()
-        $.ajax({  //비동기 vs 동기
-            url : `/member/find/idcheck`,
-            method : "get",     //HTTP BODY -> 없다. -> 쿼리스트링 ????????
-            data : {'id':id},
-            success : r=>{
-            if(r){// true: 중복있다, false: 중복없다.
-                    document.querySelector('.idcheckbox').innerHTML ='사용중인 아이디';
-                    checkArray[0] =false;
-                    }else{
-                    document.querySelector('.idcheckbox').innerHTML='통과';
-                    checkArray[0] = true; //체크 현황 변경
-                    }
-            }
-        })
+    let id = document.querySelector('#id').value;    console.log( id );
+    // 2. 정규표현식 : 영소문자+숫자 조합의 5~30 글자 사이 규칙
+    let 아이디규칙 = /^[a-z0-9]{5,30}$/
+    // 3. 정규표현식 에 따른 검사.
+    console.log( 아이디규칙.test( id ) );
+    if( 아이디규칙.test(id) ){
+        // * 아이디 중복체크 ( ajax )
+        $.ajax({ // 비동기 vs 동기
+            url : `/member/find/idcheck` ,
+            method : "get" ,        // HTTP BODY -> 없다. -> 쿼리스트링
+            data : { 'id' : id } ,  // `/member/find/idcheck?id=${id}`
+            success : (r)=>{
+                if( r ){  // true : 중복있다 , false : 중복없다.
+                    document.querySelector('.idcheckbox').innerHTML = `사용중인 아이디`;
+                    checkArray[0] = false; // 체크 현황 변경
+                }else{
+                    document.querySelector('.idcheckbox').innerHTML = `통과`;
+                    checkArray[0] = true; // 체크 현황 변경
+                }
+            } // success end
+        }) // ajax end
     }else{
-    //유효성 검사 결과 출력
-    document.querySelector('.idcheckbox').innerHTML='영소문다+숫자 조합의 5~30글자 사이로 입력해주세요.';
-    checkArray[0]=false;
+        // 유효성 검사 결과 출력
+        document.querySelector('.idcheckbox').innerHTML = `영소문자+숫자 조합의 5~30글자 사이로 입력해주세요.`;
+        checkArray[0] = false; // 체크 현황 변경
     }
-    //유효성 검사 결과 출력
-    document.querySelector('.idcheckbox').innerHTML = id.length;
-}
-// 비밀번호 유효성 검사
+} // f end
+
+
+// 5. 패스워드 유효성검사
 function pwcheck(){ console.log( "pwcheck()");
     // 1. 입력값 가져온다.
     let pw = document.querySelector('#pw').value;
     let pwconfirm = document.querySelector('#pwconfirm').value;
-    // 2. 유효성검사
-    let msg = "통과";
+    // 2. 유효성검사 결과 메시지
+    let msg = "";
+    checkArray[1] = false;
         // 1. 비밀번호에 대한 정규표현식 : 영대소문자 1개 필수 와 숫자 1개 필수 의 조합 5~30글자
-        let 비밀번호규칙 = /^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z0-9]{5,30}$/
-        // 2.
-        if( 비밀번호규칙.test(pw) ){        // 비밀번호 정규식 검사
-            // 3.
-            if( 비밀번호규칙.test(pwconfirm) ){ // 비밀번호확인 정규식 검사
-                // 4.
-                if( pw == pwconfirm ){  // 일치
-                    msg = "통과";
-                }else{
-                    msg = "패스워드 불일치";
-                }
-            }else{
-                msg = "영대소문자 1개 필수 와 숫자 1개 필수 의 조합 5~30글자";
-            }
-        }else{
-            msg = "영대소문자 1개 필수 와 숫자 1개 필수 의 조합 5~30글자";
-        }
-    //
+        let 비밀번호규칙 = /^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z0-9]{5,30}$/;
+        if( 비밀번호규칙.test(pw) ){        //  // 2.  비밀번호 정규식 검사
+            if( 비밀번호규칙.test(pwconfirm) ){ // // 3. 비밀번호확인 정규식 검사
+                if( pw == pwconfirm ){   msg = "통과"; checkArray[1] = true; } // 4. 일치
+                else{    msg = "패스워드 불일치"; }
+            }else{ msg = "영대소문자 1개 필수 와 숫자 1개 필수 의 조합 5~30글자"; }
+        }else{  msg = "영대소문자 1개 필수 와 숫자 1개 필수 의 조합 5~30글자";   }
     document.querySelector('.pwcheckbox').innerHTML = msg;
-}
+} // f end
 
 // 이름 유효성검사 : 한글 2~20
 function namecheck(){
@@ -129,7 +116,7 @@ function phonecheck(){
     let msg='000-0000-0000 또는 00-0000-0000 형식으로 입력해주세요';
     checkArray[3]=false;
     if(전화번호규칙.test(phone)){
-        msg='통과';checkArray[3]=true;
+        msg='통과'; checkArray[3]=true;
     }
     document.querySelector('.phonecheckbox').innerHTML= msg;
 }
@@ -141,11 +128,124 @@ function emailcheck(){
     let 이메일규칙 = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+\.[a-zA-Z]+$/
     let msg='아이디@도메인 입력해주세요';
     checkArray[4]=false;
+    authreqbtn.disabled = true;
     if(이메일규칙.test(email)){
-        msg='통과';checkArray[4]=true;
+        authreqbtn.disabled = false;
+        msg='인증요청가능';
     }
     document.querySelector('.emailcheckbox').innerHTML= msg;
 }
+let timer =0; //초
+let authbox= document.querySelector('.authbox'); //1. 인증 구역
+let authreqbtn =document.querySelector('.authreqbtn');    //2. 인증요청 버튼
+let timerInter=null;
+//인증 요청
+function authreq(){
+    //2.
+       let html=`<span class="timebox">00:00</span>
+                 <input type="text" class="ecodeinput"/>
+                 <button onclick="auth()" type="button">인증</button>`;
+
+    //3. 인증 구역 출력
+    authbox.innerHTML=html;
+
+    //====================자바에게 인증요청===============//
+
+    $.ajax({
+        url: "/auth/email/req",
+        method : "get" ,
+        data: {"email": document.querySelector('#email').value},
+        success : (r)=>{
+            if(r){
+                //4. 타이머 함수 실행
+                timer =10;
+                ontimer();
+                authreqbtn.disabled = true;
+            }else{
+            alert('관리자에게 문의');
+            }
+    }
+    });
+
+
+}
+
+
+
+
+//테스트
+    // 정의 : setInterval(함수,밀리초): 특정 밀리초마다 함수 실행
+    // 종료 : clearInterval(종료할Interval변수) : 종료할 Interval의 변수 대입
+function ontimer(){
+    timerInter = setInterval(()=>{
+
+    //1. 초 변수를 분/초 변환
+        let m = parseInt(timer/60); //분
+        let s = parseInt(timer%60); //분 제외한 초
+
+    //2. 시간을 두 자릿수로 표현
+        m = m <10?"0"+m : m;        //8분 -> 08분
+        s = s <10?"0"+s : s;        //3초 -> 03초
+
+    //3. 시간 출력
+        document.querySelector('.timebox').innerHTML=timer;
+
+    //4. 초 감소
+        timer--;
+
+    //5. 만약에 초가 0보다 작아지면
+        if(timer<0){
+        clearInterval(timerInter);
+        authbox.innerHTML= "인증시간 경과";
+        authreqbtn.disabled=false;
+        }
+        },1000);
+}
+
+function auth(){
+
+    //1. 내가 입력한 인증번호
+    let ecodeinput = document.querySelector('.ecodeinput').value;
+
+    //== 내가 입력한 인증번호를 자바에게 보내기=//
+
+    $.ajax({
+        url: "/auth/email/check",
+        method : "get",
+        data: {'ecodeinput':ecodeinput },
+        success : (r) => {
+            //3. 성공시/ 실패시
+            if(r){
+                checkArray[4]=true;
+                document.querySelector('.emailcheckbox').innerHTML= '통과';
+                clearInterval(timerInter);
+                authbox.innerHTML='';
+                authreqbtn.disabled =false;
+
+            } else{
+                 alert('인증번호가 다릅니다');
+                 }
+
+        }
+    })
+    }
+    //====================================//
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -183,9 +283,11 @@ function login(){
 
 // 1. 회원가입
 function signup(){
+    console.log('signup');
     //* 유효성 검사 체크 현황중에 하나라도 false 면 회원가입 금지.
     for(let i =0; i<checkArray.length;i++){
     if(!checkArray[i]){
+    console.log(checkArray[i]+(i+"번쨰인덱스 문제"));
     alert('입력사항들을 모두 정확히 입력해주세요');
     return;
         }

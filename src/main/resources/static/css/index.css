@@ -44,13 +44,13 @@ body{background-color: burlywood;}
 }
 #main_menu > li{
     margin: 0px 20px;
-    font-size: 50px;
+    font-size: 70px;
 }
 
 #login_menu{
     display: flex;
     
-    font-size: 30px;
+    font-size: 50px;
 }
 #login_menu a{
     margin: 10px;
@@ -68,7 +68,13 @@ body{background-color: burlywood;}
 
 .signUpForm{
     margin: 0 auto;
+    font-size: 30px;
 }
+#preimg{
+    margin-top: 10px;
+    width: 120px;
+}
+
 
 
 

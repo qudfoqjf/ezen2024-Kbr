@@ -1,12 +1,17 @@
 {{>ezenweb/header}}
-<h3>로그인 페이지</h3>
-    <div>
-        아이디: <input type="text" id="id">
-        비밀번호: <input type="text" id="pw">
-        <a href="/member/signup">회원가입</a>
-        <button type="button" onclick= "login()"> 로그인</button>
+<div class="container">
 
-    </div>
+        <div class="loginPage">
+            <h3>로그인 페이지</h3>
+            <div class="logBox">
+            ID: <input type="text" id="id">
+            PW: <input type="text" id="pw">
+            </div>
+            <a href="/member/signup"><button class="loginbtn" type="button">회원가입</button></a>
+            <button class="loginbtn" type="button" onclick= "login()"> 로그인</button>
+
+        </div>
+</div>
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script src="/js/member.js"></script>
 {{>ezenweb/footer}}
