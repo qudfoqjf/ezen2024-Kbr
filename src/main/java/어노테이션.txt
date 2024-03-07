@@ -7,7 +7,7 @@
         ip : 톰캣이 설치된 컴퓨터의 ip주소
         port : 톰캣(소프트웨어) 식별번호
             프로젝트내 src -> main -> resources -> application.properties
-                server.port = 80
+                server.port = 8080
             * application.properties : 스프링 설정파일 ( MAP 컬렉션프레임워크 타입 )
 
         http://192.168.17.96:80

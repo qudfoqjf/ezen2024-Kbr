@@ -60,13 +60,14 @@
     font-size: 30px; margin: 20px 0px;
 }
 .signUpForm > .loginbox > .loginbtn{
-    
-    font-size: 30px; color: brown;
+    text-align:center;
+    font-size: 30px;
     text-decoration: none;
 }
 .loginbox{
     display: flex; align-items: center;
     justify-content: center;
+    text-align: center;
 }
 
 

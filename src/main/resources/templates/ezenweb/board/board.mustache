@@ -1,0 +1,67 @@
+{{>ezenweb/header}}
+    <div class="container">
+        <h3>게시판</h3>
+        <!--상단부분-->
+
+        <!--페이지 당 게시물 수 버튼, 글쓰기 버튼-->
+        <div class="boardTopEtc">
+            <div>
+        <select class="pageBoardSize" onchange="onPageBoardSize(this)">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+        </select>
+        전체 페이지수: <span class="totalPage"></span>
+        전체 게시물 수: <span class="totalBoardSize"></span>
+
+            </div>
+            <a class="boardBtn" href="/board/write"  id="writeBoard">글쓰기</a>
+        </div>
+        <div class="boardBtnBox">
+            <button class="boardBtn categoryActive" onclick="onBcno(0)" type="button">전체보기</button>
+            <button class="boardBtn" onclick="onBcno(1)" type="button">자유</button>
+            <button class="boardBtn" onclick="onBcno(2)" type="button">노하우</button>
+        </div>
+
+        <!--테이블-->
+        <table class="table table-striped table-hover align-middle">
+            <thead>
+            <tr>
+                <th scope="col" style="width:">번호</th>
+                <th scope="col">제목</th>
+                <th scope="col">작성자</th>
+                <th scope="col">작성일</th>
+                <th scope="col">조회수</th>
+            </tr>
+            </thead>
+            <tbody id="boardTableBody">
+
+
+
+            </tbody>
+        </table>
+
+        <!--페이지네이션-->
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item"><a class="page-link" href="#">이전</a></li>
+                <li class="page-item"><a class="page-link" onclick="doViewList(1)">1</a></li>
+                <li class="page-item"><a class="page-link" onclick="doViewList(2)">2</a></li>
+                <li class="page-item"><a class="page-link" onclick="doViewList(3)">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">다음</a></li>
+            </ul>
+        </nav>
+
+        <div class="boardSearchBox"><!--검색 창-->
+            <select class="key">            <!--검색 key: SQL 검색시 사용할 필드명-->
+                <option value="b.btitle">제목</option>
+                <option value="b.bcontent">내용</option>
+                <option value="m.id">작성자</option>
+            </select>
+            <input class="keyword"/>    <!--검색 키워드: SQL 검색시 사용할 필드명-->
+            <button class="boardBtn" type="button" onclick="onSearch()">검색</button>
+        </div>
+    </div>
+<script src="/js/board/board.js"></script>
+
+{{>ezenweb/footer}}

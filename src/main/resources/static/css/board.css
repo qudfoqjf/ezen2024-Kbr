@@ -1,0 +1,62 @@
+.active > .page-link{
+        background-color : peru;
+        cursor: pointer;
+}
+
+a{
+        text-decoration: none;
+        color: peru;
+}
+
+/*게시판 안에 있는 버튼들*/
+.boardBtn{
+        background-color: #a96522;
+        color: white;
+        border: none; width: 100px;
+        font-size: 15px;text-align: center;
+        border-radius: 8px;
+}
+
+/*게시판 상단 부분*/
+.boardTopEtc{
+        display: flex;
+        justify-content: space-between;
+}
+/*검색창*/
+.boardSearchBox{
+        text-align: center;
+        margin: 30px 0px;
+        border-bottom: 1px solid #e8e8e8;
+        padding-bottom: 20px;
+}
+
+/* 키워드 입력창*/
+.boardSearchBox > .keyword{
+        border: #e8e8e8;
+        padding: 5px 10px;
+        border-radius: 10px;
+        width: 200px; font-size: 20px;
+
+}
+/*카테고리 선택박스*/
+.boardBtnBox{
+        margin: 15px 0px;
+}
+
+.categoryActive{
+        background-color: rgb(65, 31, 4);
+}
+.boardWriteForm > .keyword{
+        border: #e8e8e8;
+        padding: 5px 10px;
+        border-radius: 10px;
+        width: 200px; font-size: 20px;
+        margin: 10px 0px;
+}
+.writeButton{
+        margin: 10px 0px;
+}
+
+
+
+
