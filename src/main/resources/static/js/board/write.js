@@ -4,7 +4,7 @@ $(document).ready(function() {
     //썸머노트 옵션
     let option={
         lang:'ko-KR',   //한글패치
-        height: 500   //에디터 세로크기
+        height: 300   //에디터 세로크기
     };
   $('#summernote').summernote(option);
 });

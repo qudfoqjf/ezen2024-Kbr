@@ -6,10 +6,12 @@ import ezenweb.model.dto.BoardPageDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class BoardService {
@@ -90,9 +92,25 @@ public class BoardService {
         return boardDao.doGetBoardView( bno );
     }
 
-    // 4. 글 수정 처리
-    public Boolean doPutBoard(BoardDto boardDto){
-        System.out.println("BoardController.doPutBoard");
+    // 4. 글 수정 처리   //
+    public Boolean doPutBoard(BoardDto boardDto){System.out.println("BoardController.doPutBoard");
+        //1.
+        // 기존 첨부파일명을 구한다
+        String bfile= boardDao.doGetBoardView((int)boardDto.getBno()).getBfile();
+
+        //새로운 첨부파일이 있다.없다
+        if(!boardDto.getUploadfile().isEmpty()){// 수정시 새로운 첨부파일이 있으면
+
+            //새로운 첨부파일을 업로드하고 기존 첨부파일 삭제
+            String fileName = fileService.fileUpload(boardDto.getUploadfile());
+            if(fileName!= null){ // 업로드 성공
+                boardDto.setBfile(fileName);    //새로운 첨부파일의 이름 dto 대입한다.
+               //기존 첨부파일 삭제.
+                fileService.fileDelete(bfile);
+            }else{
+                return false; //업로드 실패
+            }
+        }else{boardDto.setBfile(bfile);}
         return boardDao.doPutBoard(boardDto);
     }
 
@@ -114,5 +132,21 @@ public class BoardService {
         return result;
     }
 
+    // 6. 게시물 작성자 인증
+    public boolean boardWriterAuth(long bno, String mid){
+        return boardDao.boardWriterAuth(bno,mid);
+    }
+
+    //7. 댓글 작성 (brcontent, brindex, mno, bno)
+
+    public boolean postReplyWrite( Map<String,String> map){System.out.println("BoardController.postReplyWrite");
+        System.out.println("map = " + map);
+        return boardDao.postReplyWrite(map);
+    }
+    //8. 댓글 출력 (brno, brcontent,brdate,mno)
+
+    public List<Map<String,String>> getReplyDo(int bno){ System.out.println("BoardController.getReplyDo");
+        return boardDao.getReplyDo(bno);
+    }
 
 }

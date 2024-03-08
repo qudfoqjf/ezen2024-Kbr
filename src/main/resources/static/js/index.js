@@ -4,7 +4,7 @@
 $.ajax({
     url : '/member/login/check',
     method : 'get',
-    success : (r)=>{  console.log(r);
+    success : (r)=>{
         // 1. 어디에
         let login_menu = document.querySelector('#login_menu');
         // 2. 무엇을
