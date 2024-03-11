@@ -113,7 +113,7 @@ public class BoardController {
     }
 
     //7. 댓글 작성 (brcontent, brindex, mno, bno)
-    @PostMapping("/replay/write.do")
+    @PostMapping("/reply/write.do")
     @ResponseBody
     public boolean postReplyWrite(@RequestParam Map<String,String>map){System.out.println("BoardController.postReplyWrite");
 
@@ -134,8 +134,9 @@ public class BoardController {
     //8. 댓글 출력 (brno, brcontent,brdate,mno)
     @GetMapping("/reply/do")
     @ResponseBody
-    public List<Map<String,String>> getReplyDo(int bno){ System.out.println("BoardController.getReplyDo");
-        return null;
+    public List<Map<String,Object>> getReplyDo(int bno){ System.out.println("BoardController.getReplyDo");
+        System.out.println(boardService.getReplyDo(bno));
+        return boardService.getReplyDo(bno);
     }
     //------------------------------------------------------//
 

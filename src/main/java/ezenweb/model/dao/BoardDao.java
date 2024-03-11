@@ -4,6 +4,7 @@ import ezenweb.model.dto.BoardDto;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -196,9 +197,7 @@ public class BoardDao extends Dao {
             System.out.println("e = " + e);
         }return false;
     }
-
     //7. 댓글 작성 (brcontent, brindex, mno, bno)
-
     public boolean postReplyWrite( Map<String,String> map){System.out.println("BoardController.postReplyWrite");System.out.println("map = " + map);
         try{
             String sql= "insert into breply(brcontent, brindex,mno,bno)" +
@@ -216,29 +215,46 @@ public class BoardDao extends Dao {
         return false;
     }
     //8. 댓글 출력 (brno, brcontent,brdate,mno)
-
-    public List<Map<String,String>> getReplyDo(int bno){ System.out.println("BoardController.getReplyDo");
-        List<Map<String,String>> list=new ArrayList<>();
+    public List<Map<String,Object>> getReplyDo(int bno){ System.out.println("BoardController.getReplyDo");
+        List<Map<String,Object>> list=new ArrayList<>();
         try{
             //상위 댓글먼저 출력
-            String sql="select * from breply where brindex = 0 and bno"+bno;
+            String sql="select * from breply where brindex = 0 and bno="+bno;
             ps = conn.prepareStatement(sql);
             rs=ps.executeQuery();
             while(rs.next()){
-                Map<String,String>map =new HashMap<>(); //map vs dto
+                // ===============상위 댓글 하나씩 객체화 하는 곳================//
+                Map<String,Object>map =new HashMap<>(); //map vs dto
                 map.put("brno",rs.getString("brno"));
                 map.put("brcontent",rs.getString("brcontent"));
                 map.put("brdate",rs.getString("brdate"));
                 map.put("mno",rs.getString("mno"));
+                    //===================해당 상위 댓글의 하위 댓글들도 호출하기=================//
+                    String subSql2 = "select * from breply where brindex = ? and bno=" +bno;
+                    ps= conn.prepareStatement(subSql2);
+                    ps.setInt(1,Integer.parseInt(rs.getString("brno")));
+                        //(int): 강제캐스팅=부모,자식관계여야 가능하다 -int와 String은 상하관계가 아니라 불가능 (형변환) vs Integer.parseInt() : 형변환함수
+                    // ****************** rs 사용하면 안되는 이유 :현재 상위댓글 출력시 rs를 사용중이기 때문(while(rs.next())
+                ResultSet rs2= ps.executeQuery();
+                List<Map<String,Object>>subList =new ArrayList<>(); //하위 댓글리스트
+                 //대댓글
+                while (rs2.next()){
+                    Map<String,Object>subMap=new HashMap<>();
+                    subMap.put("brno",rs2.getString("brno"));
+                    subMap.put("brcontent",rs2.getString("brcontent"));
+                    subMap.put("brdate",rs2.getString("brdate"));
+                    subMap.put("mno",rs2.getString("mno"));
+                    subList.add(subMap);
+                }
+                    // ==================해당 상위 댓글의 하위 댓글들도 호출하기 END=============//
+                map.put("subReply",subList);    //상위 댓글 속성에 하위 댓글 리스트 대입
                 list.add(map);
+                System.out.println("list = " + list);
             }
-
-
         }catch (Exception e){
             System.out.println("e = " + e);
         }
-
-        return null;
+        return list;
     }
 
 
